@@ -1,0 +1,78 @@
+<AGMModel>
+	<symbol id="1" type="robot"> </symbol>
+	<symbol id="2" type="status"> </symbol>
+	<link src="1" dst="2" label="hasStatus"> </link>
+
+	<symbol id="1000" type="room"> </symbol>
+	<symbol id="1001" type="roomSt"> </symbol>
+	<link src="1000" dst="1001" label="room"> </link>
+	<link src="1" dst="1000" label="know"> </link>
+	<link src="1" dst="1000" label="in"> </link>
+
+	<symbol id="2000" type="object"> </symbol>
+	<symbol id="2001" type="objectSt"> </symbol>
+	<link src="2000" dst="2001" label="table"> </link>
+	<link src="2000" dst="1000" label="in"  > </link>
+	<link src="2000" dst="2001" label="hasStatus"> </link>
+	<link src="2000" dst="2001" label="noReach"> </link>
+	<link src="2000" dst="2001" label="reachable"> </link>
+	<link src="2000" dst="2001" label="explored"> </link>
+	<link src="1" dst="2000" label="know"> </link>
+
+	<symbol id="3000" type="object"> </symbol>
+	<symbol id="3001" type="objectSt"> </symbol>
+	<link src="3000" dst="3001" label="noodles"> </link>
+	<link src="3000" dst="3001" label="reach"> </link>
+	<link src="3000" dst="3001" label="reachable"> </link>
+	<link src="3000" dst="3001" label="hasStatus"> </link>
+	<link src="1" dst="3000" label="know"> </link>
+	<link src="3000" dst="1000" label="in"> </link>
+	<link src="3000" dst="2000" label="in"> </link>
+
+	<symbol id="4000" type="person"> </symbol>
+	<symbol id="4001" type="personSt"> </symbol>
+	<link src="4000" dst="1000" label="in"> </link>
+	<link src="4000" dst="4001" label="hasStatus"> </link>
+
+	<symbol id="4002" type="person"> </symbol>
+	<symbol id="4003" type="personSt"> </symbol>
+	<link src="4002" dst="1000" label="in"> </link>
+	<link src="4002" dst="4003" label="hasStatus"> </link>
+
+	<symbol id="2002" type="object"> </symbol>
+	<symbol id="2003" type="objectSt"> </symbol>
+	<link src="2002" dst="2003" label="table"> </link>
+	<link src="2002" dst="1000" label="in"  > </link>
+	<link src="2002" dst="2003" label="hasStatus"> </link>
+	<link src="2002" dst="2003" label="noReach"> </link>
+	<link src="2002" dst="2003" label="reachable"> </link>
+	<link src="2002" dst="2003" label="explored"> </link>
+	<link src="1" dst="2002" label="know"> </link>
+
+	<symbol id="2004" type="object"> </symbol>
+	<symbol id="2005" type="objectSt"> </symbol>
+	<link src="2004" dst="2005" label="table"> </link>
+	<link src="2004" dst="1000" label="in"  > </link>
+	<link src="2004" dst="2005" label="hasStatus"> </link>
+	<link src="2004" dst="2005" label="reach"> </link>
+	<link src="2004" dst="2005" label="reachable"> </link>
+	<link src="1" dst="2004" label="know"> </link>
+
+	<symbol id="2006" type="object"> </symbol>
+	<symbol id="2007" type="objectSt"> </symbol>
+	<link src="2006" dst="2007" label="table"> </link>
+	<link src="2006" dst="1000" label="in"  > </link>
+	<link src="2006" dst="2007" label="hasStatus"> </link>
+	<link src="2006" dst="2007" label="reach"> </link>
+	<link src="2006" dst="2007" label="reachable"> </link>
+	<link src="1" dst="2006" label="know"> </link>
+
+	<symbol id="1002" type="room"> </symbol>
+	<symbol id="1003" type="roomSt"> </symbol>
+	<link src="1002" dst="1003" label="room"> </link>
+	<link src="1" dst="1002" label="know"> </link>
+	<link src="1002" dst="1000" label="transitable"> </link>
+	<link src="1000" dst="1002" label="transitable"> </link>
+
+</AGMModel>
+
