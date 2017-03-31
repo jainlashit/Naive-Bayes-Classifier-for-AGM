@@ -11,13 +11,13 @@ def enum(num_digits, count):
 	return ''.join(str(digit) for digit in reversed(numero))
 
 for i in range(1, 10):
-	path = data_path + enum(5, i)
+	path = data_path + enum(5, i) + "/"
 	for file in os.listdir(path):
 		if file.endswith(".aggt"):
 			command = "agglplan "
 			command += data_path + "domain.aggl "
-			command += path + "/" + enum(5, i) + ".xml "
-			command += path + "/" + file + " "
-			command += path + "/" + file.replace(".aggt", ".plan")
+			command += path + enum(5, i) + ".xml "
+			command += path + file + " "
+			command += path + file.replace(".aggt", ".plan")
 			os.system(command)
 
