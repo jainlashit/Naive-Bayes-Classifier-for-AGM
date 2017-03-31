@@ -1,0 +1,5 @@
+#!*setObjectReach_hierarchical@{'object': '3000', 'status': '3001'}
+graspObject@{'robot': '1', 'table': '2008', 'object': '3000', 'room': '1000', 'tableSt': '2009', 'rSt': '2', 'ost': '3001'}
+*leaveObjectInTable_hierarchical@{'robot': '1', 'table': '2000', 'object': '3000', 'room': '1000', 'tableSt': '2001'}
+#!*moveObjectToTable@{'robot': '1', 'table': '2000', 'object': '3000', 'tableSt': '2001', 'objectSt': '3001'}
+*moveObjectToTable@{'robot': '1', 'table': '2000', 'object': '3002', 'tableSt': '2001', 'objectSt': '3003'}

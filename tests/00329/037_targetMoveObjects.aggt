@@ -2,6 +2,6 @@
 {
 	1:robot
 	2002:object
-	3002:object
-	3002->2002(in)
+	3004:object
+	3004->2002(in)
 }

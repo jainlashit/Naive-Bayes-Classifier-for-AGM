@@ -1,1 +1,1 @@
-graspObject@{'robot': '1', 'table': '2006', 'object': '3004', 'room': '1002', 'tableSt': '2007', 'rSt': '2', 'ost': '3005'}
+setRestArmPosition@{'robot': '1', 'status': '2'}

@@ -1,0 +1,6 @@
+changeRoom@{'r1': '1000', 'r2': '1002', 'robot': '1', 's2': '1003', 's1': '1001'}
+*setObjectReach_hierarchical@{'object': '2008', 'status': '2009'}
+imagineMostLikelyNoodlesInPosition@{'table': '2008', 'robot': '1', 'tableSt': '2009', 'status': '2', 'room': '1002', 'noodlesSt': '4002', 'noodles': '4003'}
+verifyImaginaryNoodles@{'robot': '1', 'table': '2008', 'noodles': '4003', 'room': '1002', 'tableSt': '2009', 'status': '2', 'noodlesSt': '4002'}
+*setObjectReach_hierarchical@{'object': '4003', 'status': '4002'}
+graspObject@{'robot': '1', 'table': '2008', 'object': '4003', 'room': '1002', 'tableSt': '2009', 'rSt': '2', 'ost': '4002'}

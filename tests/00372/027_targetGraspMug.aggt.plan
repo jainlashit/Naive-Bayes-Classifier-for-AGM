@@ -1,0 +1,5 @@
+imagineMostLikelyMugInPosition@{'status': '2', 'room': '1002', 'tableSt': '2005', 'robot': '1', 'mugSt': '4002', 'mug': '4003', 'table': '2004'}
+*hierarchical_verifyImaginaryMug@{'status': '2', 'room': '1002', 'tableSt': '2005', 'robot': '1', 'mugSt': '4002', 'mug': '4003', 'table': '2004'}
+changeRoom@{'s2': '1003', 's1': '1005', 'r1': '1004', 'r2': '1002', 'robot': '1'}
+*setObjectReach_hierarchical@{'status': '4002', 'object': '4003'}
+graspObject@{'room': '1002', 'tableSt': '2005', 'object': '4003', 'ost': '4002', 'robot': '1', 'rSt': '2', 'table': '2004'}

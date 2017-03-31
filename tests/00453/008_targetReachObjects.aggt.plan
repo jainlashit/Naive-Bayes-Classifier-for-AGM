@@ -1,0 +1,3 @@
+setObjectReach_attempt@{'status': '2011', 'object': '2010', 'room': '1004', 'robot': '1'}
+setObjectReach_confirm@{'status': '2011', 'object': '2010', 'room': '1004', 'robot': '1'}
+#!*setObjectReach_hierarchical@{'status': '2011', 'object': '2010'}

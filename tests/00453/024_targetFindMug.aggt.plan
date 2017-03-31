@@ -1,0 +1,2 @@
+imagineMostLikelyMugInPosition@{'table': '2010', 'robot': '1', 'tableSt': '2011', 'status': '2', 'room': '1004', 'mugSt': '4002', 'mug': '4003'}
+*hierarchical_verifyImaginaryMug@{'mug': '4003', 'robot': '1', 'table': '2010', 'status': '2', 'room': '1004', 'tableSt': '2011', 'mugSt': '4002'}

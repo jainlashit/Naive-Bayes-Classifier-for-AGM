@@ -1,0 +1,5 @@
+changeRoom@{'s2': '1003', 's1': '1001', 'r1': '1000', 'r2': '1002', 'robot': '1'}
+changeRoom@{'s2': '1005', 's1': '1003', 'r1': '1002', 'r2': '1004', 'robot': '1'}
+setObjectReach_attempt@{'status': '2011', 'object': '2010', 'room': '1004', 'robot': '1'}
+setObjectReach_confirm@{'status': '2011', 'object': '2010', 'room': '1004', 'robot': '1'}
+#!*setObjectReach_hierarchical@{'status': '2011', 'object': '2010'}

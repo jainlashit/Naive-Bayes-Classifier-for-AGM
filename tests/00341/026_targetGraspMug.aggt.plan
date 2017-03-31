@@ -1,0 +1,3 @@
+changeRoom@{'s2': '1003', 's1': '1005', 'r1': '1004', 'r2': '1002', 'robot': '1'}
+*setObjectReach_hierarchical@{'status': '3005', 'object': '3004'}
+graspObject@{'room': '1002', 'tableSt': '2007', 'object': '3004', 'ost': '3005', 'robot': '1', 'rSt': '2', 'table': '2006'}

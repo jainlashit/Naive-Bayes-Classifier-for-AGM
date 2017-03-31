@@ -1,3 +1,4 @@
-imagineMostLikelyMugInPosition@{'table': '2002', 'robot': '1', 'tableSt': '2003', 'status': '2', 'room': '1000', 'mugSt': '4002', 'mug': '4003'}
-verifyImaginaryMug@{'robot': '1', 'table': '2002', 'mug': '4003', 'room': '1000', 'tableSt': '2003', 'status': '2', 'mugSt': '4002'}
-*setObjectReach_hierarchical@{'object': '4003', 'status': '4002'}
+changeRoom@{'r1': '1000', 'r2': '1002', 'robot': '1', 's2': '1003', 's1': '1001'}
+setObjectReach_attempt@{'object': '2008', 'status': '2009', 'room': '1002', 'robot': '1'}
+setObjectReach_confirm@{'object': '2008', 'status': '2009', 'room': '1002', 'robot': '1'}
+#!*setObjectReach_hierarchical@{'object': '2008', 'status': '2009'}

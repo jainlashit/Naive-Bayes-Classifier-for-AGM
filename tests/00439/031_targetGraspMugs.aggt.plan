@@ -1,0 +1,2 @@
+leaveObjectInTable@{'table': '2000', 'robot': '1', 'tableSt': '2001', 'room': '1000', 'object': '3000'}
+graspObject@{'robot': '1', 'table': '2002', 'object': '3004', 'room': '1000', 'tableSt': '2003', 'rSt': '2', 'ost': '3005'}

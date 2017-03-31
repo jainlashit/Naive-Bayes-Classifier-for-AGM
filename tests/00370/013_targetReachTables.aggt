@@ -1,0 +1,12 @@
+
+{
+	1:robot(1,1)
+	2004:object(1,1)
+	2005:objectSt(1,1)
+	1->2004(know)
+	2004->2005(table)
+	2004->2005(reach)
+}
+precondition
+{
+}

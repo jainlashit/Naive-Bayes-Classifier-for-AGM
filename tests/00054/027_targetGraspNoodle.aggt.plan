@@ -1,0 +1,4 @@
+setObjectReach_attempt@{'object': '3004', 'status': '3005', 'room': '1000', 'robot': '1'}
+setObjectReach_confirm@{'object': '3004', 'status': '3005', 'room': '1000', 'robot': '1'}
+#!*setObjectReach_hierarchical@{'object': '3004', 'status': '3005'}
+graspObject@{'robot': '1', 'table': '2004', 'object': '3004', 'room': '1000', 'tableSt': '2005', 'rSt': '2', 'ost': '3005'}

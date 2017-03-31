@@ -1,1 +1,1 @@
-setRestArmPosition@{'status': '2', 'robot': '1'}
+changeRoom@{'r1': '1000', 'r2': '1002', 'robot': '1', 's2': '1003', 's1': '1001'}

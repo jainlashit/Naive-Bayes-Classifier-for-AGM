@@ -1,3 +1,0 @@
-imagineMostLikelyNoodlesInPosition@{'status': '2', 'room': '1002', 'tableSt': '2005', 'noodlesSt': '4002', 'robot': '1', 'table': '2004', 'noodles': '4003'}
-verifyImaginaryNoodles@{'status': '2', 'room': '1002', 'tableSt': '2005', 'noodlesSt': '4002', 'robot': '1', 'table': '2004', 'noodles': '4003'}
-*setObjectReach_hierarchical@{'status': '4002', 'object': '4003'}

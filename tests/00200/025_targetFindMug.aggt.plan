@@ -1,0 +1,2 @@
+imagineMostLikelyMugInPosition@{'table': '2010', 'robot': '1', 'tableSt': '2011', 'status': '2', 'room': '1002', 'mugSt': '4004', 'mug': '4005'}
+verifyImaginaryMug@{'robot': '1', 'table': '2010', 'mug': '4005', 'room': '1002', 'tableSt': '2011', 'status': '2', 'mugSt': '4004'}

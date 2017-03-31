@@ -1,3 +1,3 @@
-imagineMostLikelyNoodlesInPosition@{'status': '2', 'room': '1002', 'tableSt': '2003', 'noodlesSt': '4004', 'robot': '1', 'table': '2002', 'noodles': '4005'}
-*setObjectReach_hierarchical@{'status': '4004', 'object': '4005'}
-*hierarchical_verifyImaginaryNoodles@{'status': '2', 'room': '1002', 'tableSt': '2003', 'noodlesSt': '4004', 'robot': '1', 'table': '2002', 'noodles': '4005'}
+imagineMostLikelyNoodlesInPosition@{'table': '2006', 'robot': '1', 'tableSt': '2007', 'status': '2', 'room': '1004', 'noodlesSt': '4004', 'noodles': '4005'}
+*setObjectReach_hierarchical@{'object': '4005', 'status': '4004'}
+*hierarchical_verifyImaginaryNoodles@{'noodles': '4005', 'robot': '1', 'table': '2006', 'status': '2', 'room': '1004', 'tableSt': '2007', 'noodlesSt': '4004'}

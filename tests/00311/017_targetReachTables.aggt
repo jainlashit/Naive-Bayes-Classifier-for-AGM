@@ -1,0 +1,19 @@
+
+{
+	1:robot(1,1)
+	2002:object(1,1)
+	2003:objectSt(1,1)
+	1->2002(know)
+}
+precondition
+{
+	(forall something:object
+		(forall somethingSt:objectSt
+			(when (hasStatus something somethingSt)
+				(when (mug something somethingSt)
+						(not (in something 2002))
+				)
+			)
+		)
+	)
+}

@@ -1,0 +1,5 @@
+graspObject@{'robot': '1', 'table': '2006', 'object': '3004', 'room': '1000', 'tableSt': '2007', 'rSt': '2', 'ost': '3005'}
+changeRoom@{'r1': '1000', 'r2': '1002', 'robot': '1', 's2': '1003', 's1': '1001'}
+changeRoom@{'r1': '1002', 'r2': '1004', 'robot': '1', 's2': '1005', 's1': '1003'}
+*leaveObjectInTable_hierarchical@{'robot': '1', 'table': '2010', 'object': '3004', 'room': '1004', 'tableSt': '2011'}
+#!*moveObjectToTable@{'robot': '1', 'table': '2010', 'object': '3004', 'tableSt': '2011', 'objectSt': '3005'}

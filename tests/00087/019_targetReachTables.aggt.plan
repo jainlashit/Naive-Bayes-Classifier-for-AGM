@@ -1,0 +1,2 @@
+graspObject@{'robot': '1', 'table': '2002', 'object': '3006', 'room': '1000', 'tableSt': '2003', 'rSt': '2', 'ost': '3007'}
+*moveObjectToTable@{'robot': '1', 'table': '2000', 'object': '3004', 'tableSt': '2001', 'objectSt': '3005'}
