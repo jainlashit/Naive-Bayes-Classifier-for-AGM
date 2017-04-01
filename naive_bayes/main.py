@@ -4,8 +4,8 @@ from classifier import Classifier
 
 # data_path = "/home/lashit/AGM/GSoC/src/tests/"
 data_path = "../tests/"
-total_dirs = 20
-train_dirs = 20
+total_dirs = 50
+train_dirs = 210
 
 def enum(num_digits, count):
 	numero = [0] * num_digits
