@@ -3,7 +3,8 @@ from parser import Parser
 from classifier import Classifier
 
 data_path = "/home/lashit/AGM/GSoC/src/tests/"
-total_dirs = 540
+total_dirs = 20
+train_dirs = 19
 
 def enum(num_digits, count):
 	numero = [0] * num_digits
@@ -12,13 +13,26 @@ def enum(num_digits, count):
 		count = int(count/10)
 	return ''.join(str(digit) for digit in reversed(numero))
 
-p = parser()
+p = Parser()
 p.parse_domain(data_path + "domain.aggl")
-for i in range(1, total_dirs):
-	path = data_path + enum(5, i)
+c = Classifier(p.action_list)
+
+for i in range(1, total_dirs + 1):
+	path = data_path + enum(5, i) + "/"
+	# One initModel.xml per dir
+	p.parse_initM(path + enum(5, i) + ".xml")
 	for file in os.listdir(path):
-		p.parse_initM(path + "/" + enum(5, i) + ".xml")
 		if file.endswith(".aggt"):
-			print(file)
-			# Figure out how to use file and all..
-			# Append .plan to get all plan files
+			# try:
+			# print(file)
+			if os.stat(path + file + ".plan").st_size != 0:
+				p.parse_target(path + file)
+				p.parse_plan(path + file + ".plan")
+				if i < train_dirs:
+					c.train(p.attr_node + p.attr_link, p.tgt_actions)
+				else:
+					print(c.predict(p.attr_node + p.attr_link))
+			# except:
+			# 	pass
+	print("At dir : ", i)
+print(c.action_count)
