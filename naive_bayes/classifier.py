@@ -16,13 +16,10 @@ class Classifier:
 	def train(self, attr_list, tgt_actions):
 		# attr_list contains both attr_node and attr_link
 		for action in tgt_actions:
-			print("Action, ", action)
 			self.total_count += 1
 			self.action_count[action] += 1
 			for attr in attr_list:
-				print("Reading Attributes")
 				if attr not in self.attr_count[action]:
-					print("New Hit")
 					self.attr_count[action][attr] = 1
 				else:
 					'''There is a chance that the following count can be greater than action_count[action]
