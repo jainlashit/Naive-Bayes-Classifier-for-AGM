@@ -7,7 +7,8 @@ class Classifier:
 		# Number of times action occured
 		self.action_count = {}
 		self.attr_count = {}
-		for action in action_list:
+		self.action_list = action_list
+		for action in self.action_list:
 			self.action_count[action] = 0
 			self.attr_count[action] = {}
 
@@ -17,17 +18,28 @@ class Classifier:
 			self.total_count += 1
 			self.action_count[action] += 1
 			for attr in attr_list:
-				if attr not in attr_count[action]:
+				if attr not in self.attr_count[action]:
 					self.attr_count[action][attr] = 1
 				else:
 					'''There is a chance that the following count can be greater than action_count[action]
 					 because we allow a single attribute to occur multiple times'''
 					self.attr_count[action][attr] += 1
 
-	def predict(attr_list):
+	def print_data():
+		f = open("total_count.txt", "w")
+		f.write(total_count)
+		f.close()
+		f = open("action_count.txt", "w")
+		f.write(action_count)
+		f.close()
+		f = open("attr_count.txt", "w")
+		f.write(attr_count)
+		f.close()
+
+	def predict(self, attr_list):
 		# Provides a probability distribution over actions
 		prob_action = {}
-		for action in action_list:
+		for action in self.action_list:
 			prob_action[action] = self.action_count[action] / self.total_count
 			for attr in attr_list:
 				if attr in self.attr_count[action]:
