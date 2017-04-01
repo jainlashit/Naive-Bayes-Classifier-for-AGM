@@ -1,4 +1,0 @@
-imagineMostLikelyNoodlesInPosition@{'status': '2', 'room': '1000', 'tableSt': '2001', 'noodlesSt': '4004', 'robot': '1', 'table': '2000', 'noodles': '4005'}
-verifyImaginaryNoodles@{'status': '2', 'room': '1000', 'tableSt': '2001', 'noodlesSt': '4004', 'robot': '1', 'table': '2000', 'noodles': '4005'}
-*setObjectReach_hierarchical@{'status': '4004', 'object': '4005'}
-graspObject@{'room': '1000', 'tableSt': '2001', 'object': '4005', 'ost': '4004', 'robot': '1', 'rSt': '2', 'table': '2000'}

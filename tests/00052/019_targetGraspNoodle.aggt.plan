@@ -1,3 +1,0 @@
-changeRoom@{'s2': '1003', 's1': '1001', 'r1': '1000', 'r2': '1002', 'robot': '1'}
-*setObjectReach_hierarchical@{'status': '3003', 'object': '3002'}
-graspObject@{'room': '1002', 'tableSt': '2005', 'object': '3002', 'ost': '3003', 'robot': '1', 'rSt': '2', 'table': '2004'}

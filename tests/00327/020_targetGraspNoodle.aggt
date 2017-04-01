@@ -1,9 +1,0 @@
-
-{
-	1:robot(1,1)
-	noodles:object(1,1)
-	noodlesSt:objectSt(1,1)
-	1->noodles(know)
-	noodles->mugSt(noodles)
-	noodles->1(in)
-}
