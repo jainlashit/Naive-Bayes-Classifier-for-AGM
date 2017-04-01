@@ -1,3 +1,4 @@
+import json
 class Classifier:
 	
 	def __init__(self, action_list):
@@ -15,25 +16,27 @@ class Classifier:
 	def train(self, attr_list, tgt_actions):
 		# attr_list contains both attr_node and attr_link
 		for action in tgt_actions:
+			print("Action, ", action)
 			self.total_count += 1
 			self.action_count[action] += 1
 			for attr in attr_list:
+				print("Reading Attributes")
 				if attr not in self.attr_count[action]:
+					print("New Hit")
 					self.attr_count[action][attr] = 1
 				else:
 					'''There is a chance that the following count can be greater than action_count[action]
 					 because we allow a single attribute to occur multiple times'''
 					self.attr_count[action][attr] += 1
 
-	def print_data():
+	def print_data(self):
 		f = open("total_count.txt", "w")
-		f.write(total_count)
+		f.write(str(self.total_count))
 		f.close()
-		f = open("action_count.txt", "w")
-		f.write(action_count)
-		f.close()
+		json.dump(self.action_count, open("action_count.txt", "w"))
 		f = open("attr_count.txt", "w")
-		f.write(attr_count)
+		for key in self.attr_count:
+			f.write(str(key) + ":" + str(self.attr_count[key]) + "\n")
 		f.close()
 
 	def predict(self, attr_list):

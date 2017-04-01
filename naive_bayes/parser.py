@@ -149,14 +149,14 @@ class Parser:
 									for relation in self.relMap[id_pair]:
 										self.attr_link.append((relation, self.typeMap[id1], var_map[temp[0]], rel))
 
-		print(var_map)
+		# print(var_map)
 		f.close()
 
-if __name__ == '__main__':
-	p = Parser()
-	p.parse_domain("/home/lashit/AGM/GSoC/src/tests/domain.aggl")
-	p.parse_plan("/home/lashit/AGM/GSoC/src/tests/00001/001_targetStop.aggt.plan")
-	p.parse_initM("/home/lashit/AGM/GSoC/src/tests/00001/00001.xml")
-	p.parse_target("/home/lashit/AGM/GSoC/src/tests/00001/001_targetStop.aggt")
-	print(p.tgt_actions)
-	print(p.action_list)
+# if __name__ == '__main__':
+# 	p = Parser()
+# 	p.parse_domain("/home/lashit/AGM/GSoC/src/tests/domain.aggl")
+# 	p.parse_plan("/home/lashit/AGM/GSoC/src/tests/00001/001_targetStop.aggt.plan")
+# 	p.parse_initM("/home/lashit/AGM/GSoC/src/tests/00001/00001.xml")
+# 	p.parse_target("/home/lashit/AGM/GSoC/src/tests/00001/001_targetStop.aggt")
+# 	print(p.tgt_actions)
+# 	print(p.action_list)

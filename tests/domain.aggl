@@ -16,7 +16,7 @@ hierarchical moveObjectToTable : active(1)
 		table:object(100,110)
 		tableSt:objectSt(100,220)
 		object:object(-100,110)
-		objectSt:objectSt(-100,110)
+		objectSt:objectSt(-100,220)
 		robot->object(know)
 		robot->table(know)
 		table->tableSt(table)
@@ -28,7 +28,7 @@ hierarchical moveObjectToTable : active(1)
 		table:object(100,110)
 		tableSt:objectSt(100,220)
 		object:object(-100,110)
-		objectSt:objectSt(-100,110)
+		objectSt:objectSt(-100,220)
 		robot->object(know)
 		table->tableSt(table)
 		object->table(in)
@@ -152,7 +152,6 @@ reachPose : active(1)
 hierarchical setObjectReach_hierarchical : active(1)
 {
 	{
-		robot:robot(0,0)
 		object:object(160,130)
 		status:objectSt(390,130)
 		object->status(hasStatus)
@@ -161,7 +160,6 @@ hierarchical setObjectReach_hierarchical : active(1)
 	}
 	=>
 	{
-		robot:robot(0,0)
 		object:object(160,130)
 		status:objectSt(390,130)
 		object->status(hasStatus)
@@ -201,7 +199,7 @@ hierarchical setObjectReach_hierarchical : active(1)
 }
 
 
-setObjectReach : active(1)
+setObjectReach_attempt : active(1)
 {
 	{
 		robot:robot(0,0)
@@ -210,6 +208,64 @@ setObjectReach : active(1)
 		status:objectSt(390,130)
 		object->status(hasStatus)
 		object->status(noReach)
+		object->status(reachable)
+		object->room(in)
+		robot->room(in)
+	}
+	=>
+	{
+		robot:robot(0,0)
+		room:room(0,130)
+		object:object(160,130)
+		status:objectSt(390,130)
+		object->status(hasStatus)
+		object->status(reachAttempt)
+		object->status(reachable)
+		object->room(in)
+		robot->room(in)
+	}
+	effect
+	{
+		(and
+			(forall somepose:pose
+				(forall someposeSt:poseSt
+					(when
+						(hasStatus somepose someposeSt)
+						(and
+							(not (reach somepose someposeSt))
+							(noReach somepose someposeSt)
+						)
+					)
+				)
+			)
+			(forall someobject:object
+				(forall someobjectSt:objectSt
+					(when
+						(and
+							(hasStatus someobject someobjectSt)
+							(not (hasStatus object someobjectSt) )
+						)
+						(and
+							(not (reach someobject someobjectSt))
+							(not (reachAttempt someobject someobjectSt))
+							(noReach someobject someobjectSt)
+						)
+					)
+				)
+			)
+		)
+	}
+}
+
+setObjectReach_confirm : active(1)
+{
+	{
+		robot:robot(0,0)
+		room:room(0,130)
+		object:object(160,130)
+		status:objectSt(390,130)
+		object->status(hasStatus)
+		object->status(reachAttempt)
 		object->status(reachable)
 		object->room(in)
 		robot->room(in)
@@ -249,6 +305,7 @@ setObjectReach : active(1)
 						)
 						(and
 							(not (reach someobject someobjectSt))
+							(not (reachAttempt someobject someobjectSt))
 							(noReach someobject someobjectSt)
 						)
 					)
@@ -646,39 +703,11 @@ hierarchical hierarchical_verifyImaginaryMug : active(2)
 }
 
 
-setRestArmPosition : active(1)
-{
-	{
-		robot:robot(0,-110)
-		status:status(0,110)
-		robot->status(hasStatus)
-		robot->status(restArm)*
-	}
-	=>
-	{
-		robot:robot(0,-110)
-		status:status(0,110)
-		robot->status(hasStatus)
-		robot->status(restArm)
-	}
-}
 
-unsetRestArmPosition : passive(1)
-{
-	{
-		robot:robot(0,-110)
-		status:status(0,110)
-		robot->status(hasStatus)
-		robot->status(restArm)
-	}
-	=>
-	{
-		robot:robot(0,-110)
-		status:status(0,110)
-		robot->status(hasStatus)
-		robot->status(restArm)*
-	}
-}
+
+
+
+
 
 
 
@@ -845,3 +874,42 @@ hierarchical hierarchical_verifyImaginaryNoodles : active(2)
 
 
 
+
+
+
+
+
+
+setRestArmPosition : active(1)
+{
+	{
+		robot:robot(0,-110)
+		status:status(0,110)
+		robot->status(hasStatus)
+		robot->status(restArm)*
+	}
+	=>
+	{
+		robot:robot(0,-110)
+		status:status(0,110)
+		robot->status(hasStatus)
+		robot->status(restArm)
+	}
+}
+
+unsetRestArmPosition : passive(1)
+{
+	{
+		robot:robot(0,-110)
+		status:status(0,110)
+		robot->status(hasStatus)
+		robot->status(restArm)
+	}
+	=>
+	{
+		robot:robot(0,-110)
+		status:status(0,110)
+		robot->status(hasStatus)
+		robot->status(restArm)*
+	}
+}

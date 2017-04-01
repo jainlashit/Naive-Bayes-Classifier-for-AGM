@@ -4,8 +4,8 @@ from classifier import Classifier
 
 # data_path = "/home/lashit/AGM/GSoC/src/tests/"
 data_path = "../tests/"
-total_dirs = 20
-train_dirs = 19
+total_dirs = 5
+train_dirs = 10
 
 def enum(num_digits, count):
 	numero = [0] * num_digits
@@ -24,16 +24,16 @@ for i in range(1, total_dirs + 1):
 	p.parse_initM(path + enum(5, i) + ".xml")
 	for file in os.listdir(path):
 		if file.endswith(".aggt"):
-			try:
+			# try:
 			# print(file)
-				if os.stat(path + file + ".plan").st_size != 0:
-					p.parse_target(path + file)
-					p.parse_plan(path + file + ".plan")
-					if i < train_dirs:
-						c.train(p.attr_node + p.attr_link, p.tgt_actions)
-					else:
-						print(c.predict(p.attr_node + p.attr_link))
-			except:
-				pass
+			if os.stat(path + file + ".plan").st_size != 0:
+				p.parse_target(path + file)
+				p.parse_plan(path + file + ".plan")
+				if i < train_dirs:
+					c.train(p.attr_node + p.attr_link, p.tgt_actions)
+				else:
+					print(c.predict(p.attr_node + p.attr_link))
+			# except:
+			# 	pass
 	print("At dir : ", i)
-print(c.action_count)
+c.print_data()
