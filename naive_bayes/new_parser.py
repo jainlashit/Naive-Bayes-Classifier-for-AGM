@@ -116,6 +116,7 @@ class Parser:
 					temp[0] = temp[0].strip()
 					# rel stores relations between two id's.
 					rel = temp[1].split(")")[0].strip()
+					self.attr_link.append((type1, rel, type2))
 					# There can be four cases, src id is int/symbol or dst id is int/symbol
 					if line[0].isdigit() and temp[0].isdigit():
 						id1 = int(line[0])
@@ -124,51 +125,40 @@ class Parser:
 						type1 = self.typeMap[id1]
 						type2 = self.typeMap[id2]
 
-
 						for relation in self.relMap[id_pair]:
-							self.attr_link.append((relation, type1, type2, rel))
+							self.attr_link.append((type1, relation, type2))
+							self.attr_link.append((type1, relation, rel, type2))
 							
 					else:
 						if not line[0].isdigit():
 							if not temp[0].isdigit():
+								type1 = var_map[line[0]]
+								type2 = var_map[temp[0]]
 								for id_pair in self.relMap:
-									flag = False
-									type1 = self.typeMap[id_pair[0]]
-									type2 = self.typeMap[id_pair[1]]
-									if line[0] == type1 and temp[0] == type2:
-										flag = True
-									for relation in self.relMap[id_pair]:
-										self.attr_link.append((relation, type1, type2, rel))
-
-
+									if type1 == self.typeMap[id_pair[0]] and type2 == self.typeMap[id_pair[1]]:
+										for relation in self.relMap[id_pair]:
+											self.attr_link.append((type1, relation, type2))
+											self.attr_link.append((type1, relation, rel, type2))
+										
 							else:
 								id2 = int(temp[0])
+								type1 = var_map[line[0]]
+								type2 = self.typeMap[id2]
 								for id_pair in self.relMap:
-									flag = False
-									if id2 in id_pair:
-										if id2 == id_pair[0]:
-											if self.typeMap[id_pair[1]] == var_map[line[0]]:
-												flag = True
-										else:
-											if self.typeMap[id_pair[0]] == var_map[line[0]]:
-												flag = True
-									if flag:
+									if self.typeMap[id_pair[0]] == type1 and id_pair[1] == id2:
 										for relation in self.relMap[id_pair]:
-											self.attr_link.append((relation, var_map[line[0]], self.typeMap[id2], rel))
+											self.attr_link.append((type1, relation, type2))
+											self.attr_link.append((type1, relation, rel, type2))
+										
 						else:
 							id1 = int(line[0])
+							type1 = self.typeMap[id1]
+							type2 = var_map[temp[0]]
 							for id_pair in self.relMap:
-								flag = False
-								if id1 in id_pair:
-									if id1 == id_pair[0]:
-										if self.typeMap[id_pair[1]] == var_map[temp[0]]:
-											flag = True
-									else:
-										if self.typeMap[id_pair[0]] == var_map[temp[0]]:
-											flag = True
-								if flag:
+								if id_pair[0] == id1 and self.typeMap[id_pair[1]] == type2:
 									for relation in self.relMap[id_pair]:
-										self.attr_link.append((relation, self.typeMap[id1], var_map[temp[0]], rel))
+										self.attr_link.append((type1, relation, type2))
+										self.attr_link.append((type1, relation, rel, type2))
 
 		# print(var_map)
 		f.close()
