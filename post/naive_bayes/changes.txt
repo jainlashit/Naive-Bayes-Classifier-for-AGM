@@ -1,0 +1,3 @@
+Removed the lexicographic relations between id's.
+
+Change the core algorithm accordingly.
