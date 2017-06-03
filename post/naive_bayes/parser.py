@@ -6,12 +6,12 @@ class Parser:
 	# Maps id to it's type
 
 	def __init__(self):
+		# action_list contains list of the actions
+		self.action_list = []
 		# Contains mapping of id to type
 		self.typeMap = {}
 		# Contains mapping of pair of id's to the relations the have
 		self.relMap = {}
-		# action_list contains list of the actions
-		self.action_list = []
 		# tgt_actions list of all target values (actions)
 		self.tgt_actions = []
 		# Below two variables starting with attr_ contains training attributes for our Naive Bayes Classifier
@@ -52,6 +52,10 @@ class Parser:
 		'''
 		Parse xml file (initial world model)
 		'''
+		# Re-initializing variables necessary while training and testing 
+		self.typeMap = {}
+		self.relMap = {}
+
 		tree = ET.parse(fileName)
 		root = tree.getroot()
 		for child in root:
@@ -70,6 +74,7 @@ class Parser:
 		'''
 		A parser function for files with .plan extension
 		'''
+		self.tgt_actions = []
 		f = open(fileName)
 		for line in f:
 			line = line.strip()
@@ -85,6 +90,8 @@ class Parser:
 		'''
 		Parse files with .aggt extension, target files (with respect to planner not classifier)
 		'''
+		self.attr_node = []
+		self.attr_link = []
 		# Keep tracks of keys used to represent some object type
 		var_map = {}
 		f = open(fileName)
