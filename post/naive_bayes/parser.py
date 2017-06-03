@@ -47,21 +47,7 @@ class Parser:
 					else:
 						self.action_list.append(line.split()[0])
 		f.close()
-	
-	def parse_plan(self, fileName):
-		'''
-		A parser function for files with .plan extension
-		'''
-		f = open(fileName)
-		for line in f:
-			line = line.strip()
-			if line.startswith("#!*"):
-				line = line[3:].strip()
-			elif line.startswith("*"):
-				line = line[1:].strip()
-			self.tgt_actions.append(line.split("@")[0])
-		f.close()
-	
+
 	def parse_initM(self, fileName):
 		'''
 		Parse xml file (initial world model)
@@ -79,6 +65,21 @@ class Parser:
 					self.relMap[id_pair] = [child.attrib['label']]
 				else:
 					self.relMap[id_pair].append(child.attrib['label'])
+	
+	def parse_plan(self, fileName):
+		'''
+		A parser function for files with .plan extension
+		'''
+		f = open(fileName)
+		for line in f:
+			line = line.strip()
+			if line.startswith("#!*"):
+				line = line[3:].strip()
+			elif line.startswith("*"):
+				line = line[1:].strip()
+			self.tgt_actions.append(line.split("@")[0])
+		f.close()
+	
 
 	def parse_target(self, fileName):
 		'''
@@ -163,17 +164,15 @@ class Parser:
 										self.attr_link.append((type1, relation, type2))
 										self.attr_link.append((type1, relation, rel, type2))
 
-		print(self.attr_link)
-		print(self.attr_node)
 		f.close()
 
 if __name__ == '__main__':
 	p = Parser()
-	main_path = "/home/lashit/AGM/GSoC/src/post/test/"
-	test_file = "008_targetReachNoodles"
-	p.parse_domain(main_path + "domain.aggl")
-	p.parse_plan(main_path + test_file + ".aggt.plan")
-	p.parse_initM(main_path + "00001.xml")
-	p.parse_target(main_path + test_file + ".aggt")
+	# main_path = "/home/lashit/AGM/GSoC/src/post/test/"
+	# test_file = "008_targetReachNoodles"
+	# p.parse_domain(main_path + "domain.aggl")
+	# p.parse_plan(main_path + test_file + ".aggt.plan")
+	# p.parse_initM(main_path + "00001.xml")
+	# p.parse_target(main_path + test_file + ".aggt")
 	# print(p.tgt_actions)
 	# print(p.action_list)
