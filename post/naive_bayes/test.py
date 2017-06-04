@@ -3,12 +3,13 @@ import os
 import pickle
 from parser import Parser
 from classifier import Classifier
+import traceback
 
 data_path = "../../tests/"
 
 # Enter all the directories to be trained here.
 start_dir = 271
-end_dir = 540
+end_dir = 273
 dirs = range(start_dir, end_dir + 1)
 
 def fetch(fileName):
@@ -54,7 +55,7 @@ def test():
 	accuracy = 0
 	min_accuracy = 100
 	
-	if(len(sys.argv) > 2):
+	if len(sys.argv) > 2:
 		# .plan file
 		p.parse_plan(sys.argv[3])
 		# .xml file
@@ -82,11 +83,13 @@ def test():
 								p.parse_plan(path + file + ".plan")
 						except:
 							pass
+					print 'Number of actions', len(p.tgt_actions)
 					accuracy += get_accuracy(p.tgt_actions, c.predict(p.attr_link + p.attr_node))
 					count += 1
 
 				print("At dir : ", i)
 			except:
+                                traceback.print_exc()
 				print("File not found : " + path + enum(5, i) + ".xml")
 		accuracy /= count
 
