@@ -55,7 +55,7 @@ def test():
 	accuracy = 0
 	min_accuracy = 100
 	
-	if len(sys.argv) > 2:
+	if len(sys.argv) == 5:
 		# .plan file
 		p.parse_plan(sys.argv[3])
 		# .xml file
@@ -66,7 +66,9 @@ def test():
 		c.prefetch(*fetch(sys.argv[4]))
 		# print(c.attr_count)
 		accuracy = get_accuracy(p.tgt_actions, c.predict(p.attr_link + p.attr_node))
-	else:
+		print("Accuracy : " + str(accuracy) + "%")
+
+	elif len(sys.argv) == 2:
 		count = 0
 		c.prefetch(*fetch(sys.argv[1]))
 		
@@ -95,8 +97,12 @@ def test():
 
 				print("At dir : ", i)
 		accuracy /= count
+		print("Accuracy : " + str(accuracy) + "%")
+	else:
+		print("ERROR: Arguments missing")
+		print("For Batch training syntax    : `$python test.py learning_file`")
+		print("For Training single instance : `$python test.py initModel.xml target.aggt final.plan learning_file`")
 
-	print("Accuracy : " + str(accuracy) + "%")
 
 if __name__ == '__main__':
 	test()
