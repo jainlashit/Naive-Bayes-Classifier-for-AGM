@@ -71,10 +71,16 @@ def test():
 		c.prefetch(*fetch(sys.argv[1]))
 		
 		for i in dirs:
+			flag = True
 			path = data_path + enum(5, i) + "/"
 			# One initModel.xml per dir
 			try:
 				p.parse_initM(path + enum(5, i) + ".xml")
+			except:
+				flag = False
+				print("File not found : " + path + enum(5, i) + ".xml")
+
+			if flag:		
 				for file in os.listdir(path):
 					if file.endswith(".aggt"):
 						try:
@@ -83,14 +89,11 @@ def test():
 								p.parse_plan(path + file + ".plan")
 						except:
 							pass
-					print 'Number of actions', len(p.tgt_actions)
+					# print('Number of actions', len(p.tgt_actions))
 					accuracy += get_accuracy(p.tgt_actions, c.predict(p.attr_link + p.attr_node))
 					count += 1
 
 				print("At dir : ", i)
-			except:
-                                traceback.print_exc()
-				print("File not found : " + path + enum(5, i) + ".xml")
 		accuracy /= count
 
 	print("Accuracy : " + str(accuracy) + "%")
