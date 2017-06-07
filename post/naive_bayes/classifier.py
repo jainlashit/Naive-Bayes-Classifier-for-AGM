@@ -1,3 +1,4 @@
+from __future__ import division
 import json
 import pickle
 
@@ -71,17 +72,17 @@ class Classifier:
 		for action in self.action_list:
 			prob_action[action] = self.action_count[action] / self.total_count
 			for attr in self.attr_all:
+				prob_term = 1 / (self.action_count[action] + 2 * self.laplace_constant)
 				if attr in self.attr_count[action]:
+					prob_term *= (self.attr_count[action][attr] + self.laplace_constant)
 					if attr in attr_list:
-						prob_action[action] *= (self.attr_count[action][attr] + self.laplace_constant)
+						prob_action[action] *= prob_term
 					else:
-						prob_action[action] *= 1 - (self.attr_count[action][attr] + self.laplace_constant)
-
+						prob_action[action] *= 1 - prob_term
 				else:
+					prob_term *= self.laplace_constant
 					if attr in attr_list:
-						prob_action[action] *= (self.laplace_constant)
+						prob_action[action] *= prob_term
 					else:
-						prob_action[action] *= 1 - (self.laplace_constant)
-				# Number of values that an attribute can take is just one
-				prob_action[action] /= (self.action_count[action] + 2 * self.laplace_constant)
+						prob_action[action] *= 1 - prob_term 
 		return prob_action
