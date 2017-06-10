@@ -51,9 +51,9 @@ class Parser:
 					else:
 						curr_action = line.split()[0]
 						self.action_list.append(line.split()[0])
-					self.action_info[curr_action] = []
+					self.action_info[curr_action] = ''
 				if curr_action != None:
-					self.action_info[curr_action].append(line)
+					self.action_info[curr_action] += line
 		f.close()
 
 	def parse_initM(self, fileName):
