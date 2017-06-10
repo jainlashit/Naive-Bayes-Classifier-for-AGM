@@ -47,40 +47,49 @@ class Test:
 			count = int(count/10)
 		return ''.join(str(digit) for digit in reversed(numero))
 
+	def new_action(self, threshold, fileName):
+		f = open(fileName, 'w')
+		print(self.prb_distrb)
+		for action in self.prb_distrb:
+			if self.prb_distrb[action] >= threshold:
+				f.write(self.classifier.action_info[action])
+		f.close()
+
+
 	def mono_test(self, plan_file, init_file, target_file, train_file):
 		'''
 		For singleton testing pass pickled data from train.py . "python fileName initModel.xml target.aggt final.plan learning_file"
 		'''
-		c = Classifier([])
-		p = Parser()
+		self.classifier = Classifier([])
+		self.parser = Parser()
 		accuracy = 0
 		min_accuracy = 100	
 	 	# .plan file
-		p.parse_plan(plan_file)
+		self.parser.parse_plan(plan_file)
 		# .xml file
-		p.parse_initM(init_file)
+		self.parser.parse_initM(init_file)
 		# .aggt file
-		p.parse_target(target_file)
+		self.parser.parse_target(target_file)
 		# train_file contains relevant trained data (pickled)
-		c.prefetch(*self.fetch(train_file))
-		# print(c.attr_count)
-		accuracy = self.get_accuracy(p.tgt_actions, c.predict(p.attr_link + p.attr_node))
+		self.classifier.prefetch(*self.fetch(train_file))
+		# print(self.classifier.attr_count)
+		accuracy = self.get_accuracy(self.parser.tgt_actions, self.classifier.predict(self.parser.attr_link + self.parser.attr_node))
 		print("Accuracy : " + str(accuracy) + "%")
 
 	def batch_test(self, train_file):
-		c = Classifier([])
-		p = Parser()
+		self.classifier= Classifier([])
+		self.parser= Parser()
 		accuracy = 0
 		min_accuracy = 100
 		count = 0
-		c.prefetch(*self.fetch(train_file))
+		self.classifier.prefetch(*self.fetch(train_file))
 		
 		for i in self.dirs:
 			flag = True
 			path = self.data_path + self.enum(5, i) + "/"
 			# One initModel.xml per dir
 			try:
-				p.parse_initM(path + self.enum(5, i) + ".xml")
+				self.parser.parse_initM(path + self.enum(5, i) + ".xml")
 			except:
 				flag = False
 				print("File not found : " + path + self.enum(5, i) + ".xml")
@@ -90,12 +99,12 @@ class Test:
 					if file.endswith(".aggt"):
 						try:
 							if os.stat(path + file + ".plan").st_size != 0:
-								p.parse_target(path + file)
-								p.parse_plan(path + file + ".plan")
+								self.parser.parse_target(path + file)
+								self.parser.parse_plan(path + file + ".plan")
 						except:
 							pass
-					# print('Number of actions', len(p.tgt_actions))
-					accuracy += self.get_accuracy(p.tgt_actions, c.predict(p.attr_link + p.attr_node))
+					# print('Number of actions', len(self.parser.tgt_actions))
+					accuracy += self.get_accuracy(self.parser.tgt_actions, self.classifier.predict(self.parser.attr_link + self.parser.attr_node))
 					count += 1
 
 				print("At dir : ", i)
@@ -118,6 +127,7 @@ if __name__ == '__main__':
 
 	if len(sys.argv) == 5:
 		t.mono_test(sys.argv[3], sys.argv[1], sys.argv[2], sys.argv[4])
+		t.new_action(0.2, "new.aggl")
 	elif len(sys.argv) == 2:
 		t.batch_test(sys.argv[1])
 	else:
