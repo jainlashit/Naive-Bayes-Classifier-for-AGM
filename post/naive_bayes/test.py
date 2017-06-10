@@ -47,7 +47,7 @@ class Test:
 			count = int(count/10)
 		return ''.join(str(digit) for digit in reversed(numero))
 
-	def new_action(self, threshold, fileName):
+	def new_domain(self, threshold, fileName):
 		f = open(fileName, 'w')
 		print(self.prb_distrb)
 		for action in self.prb_distrb:
@@ -127,7 +127,7 @@ if __name__ == '__main__':
 
 	if len(sys.argv) == 5:
 		t.mono_test(sys.argv[3], sys.argv[1], sys.argv[2], sys.argv[4])
-		t.new_action(0.2, "new.aggl")
+		t.new_domain(0.2, "new.aggl")
 	elif len(sys.argv) == 2:
 		t.batch_test(sys.argv[1])
 	else:
