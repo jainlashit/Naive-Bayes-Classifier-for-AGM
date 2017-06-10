@@ -18,6 +18,8 @@ class Parser:
 		self.attr_node = []
 		# what relations would exist between pair of id's as per target's (planner's context) requirement
 		self.attr_link = []
+		# Tells about the parameters involved with different action (used for dynamically producing action files)
+		self.action_info = {}
 
 	def parse_domain(self, fileName):
 		'''
@@ -26,6 +28,7 @@ class Parser:
 		f = open(fileName)
 		parse_flag = False
 		count = 0
+		curr_action = None
 		'''Since actions are out of all nested loops, 
 		therefore count=0 indicates to get ready to read an action name. 
 		'''
@@ -43,9 +46,14 @@ class Parser:
 					count -= 1
 				elif count == 0 and line.strip() != "":
 					if "hierarchical" in line:
+						curr_action = line.split()[1]
 						self.action_list.append(line.split()[1])
 					else:
+						curr_action = line.split()[0]
 						self.action_list.append(line.split()[0])
+					self.action_info[curr_action] = []
+				if curr_action != None:
+					self.action_info[curr_action].append(line)
 		f.close()
 
 	def parse_initM(self, fileName):
