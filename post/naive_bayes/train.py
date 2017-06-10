@@ -38,4 +38,4 @@ for i in dirs:
 	except:
 		print("File not found : " + path + enum(5, i) + ".xml")
 	print("At dir : ", i)
-c.store()
+c.store(p.action_info)
