@@ -47,63 +47,60 @@ class Test:
 			count = int(count/10)
 		return ''.join(str(digit) for digit in reversed(numero))
 
-	def test(self):
+	def mono_test(self, plan_file, init_file, target_file, train_file):
 		'''
-		Pass pickled data for batch testing. "python fileName learning_file"
-		For singleton testing "python fileName initModel.xml target.aggt final.plan learning_file"
+		For singleton testing pass pickled data from train.py . "python fileName initModel.xml target.aggt final.plan learning_file"
 		'''
 		c = Classifier([])
 		p = Parser()
 		accuracy = 0
+		min_accuracy = 100	
+	 	# .plan file
+		p.parse_plan(plan_file)
+		# .xml file
+		p.parse_initM(init_file)
+		# .aggt file
+		p.parse_target(target_file)
+		# train_file contains relevant trained data (pickled)
+		c.prefetch(*self.fetch(train_file))
+		# print(c.attr_count)
+		accuracy = self.get_accuracy(p.tgt_actions, c.predict(p.attr_link + p.attr_node))
+		print("Accuracy : " + str(accuracy) + "%")
+
+	def batch_test(self, train_file):
+		c = Classifier([])
+		p = Parser()
+		accuracy = 0
 		min_accuracy = 100
+		count = 0
+		c.prefetch(*self.fetch(train_file))
 		
-		if len(sys.argv) == 5:
-			# .plan file
-			p.parse_plan(sys.argv[3])
-			# .xml file
-			p.parse_initM(sys.argv[1])
-			# .aggt file
-			p.parse_target(sys.argv[2])
-			# Learning file
-			c.prefetch(*self.fetch(sys.argv[4]))
-			# print(c.attr_count)
-			accuracy = self.get_accuracy(p.tgt_actions, c.predict(p.attr_link + p.attr_node))
-			print("Accuracy : " + str(accuracy) + "%")
+		for i in self.dirs:
+			flag = True
+			path = self.data_path + self.enum(5, i) + "/"
+			# One initModel.xml per dir
+			try:
+				p.parse_initM(path + self.enum(5, i) + ".xml")
+			except:
+				flag = False
+				print("File not found : " + path + self.enum(5, i) + ".xml")
 
-		elif len(sys.argv) == 2:
-			count = 0
-			c.prefetch(*self.fetch(sys.argv[1]))
-			
-			for i in self.dirs:
-				flag = True
-				path = self.data_path + self.enum(5, i) + "/"
-				# One initModel.xml per dir
-				try:
-					p.parse_initM(path + self.enum(5, i) + ".xml")
-				except:
-					flag = False
-					print("File not found : " + path + self.enum(5, i) + ".xml")
+			if flag:		
+				for file in os.listdir(path):
+					if file.endswith(".aggt"):
+						try:
+							if os.stat(path + file + ".plan").st_size != 0:
+								p.parse_target(path + file)
+								p.parse_plan(path + file + ".plan")
+						except:
+							pass
+					# print('Number of actions', len(p.tgt_actions))
+					accuracy += self.get_accuracy(p.tgt_actions, c.predict(p.attr_link + p.attr_node))
+					count += 1
 
-				if flag:		
-					for file in os.listdir(path):
-						if file.endswith(".aggt"):
-							try:
-								if os.stat(path + file + ".plan").st_size != 0:
-									p.parse_target(path + file)
-									p.parse_plan(path + file + ".plan")
-							except:
-								pass
-						# print('Number of actions', len(p.tgt_actions))
-						accuracy += self.get_accuracy(p.tgt_actions, c.predict(p.attr_link + p.attr_node))
-						count += 1
-
-					print("At dir : ", i)
-			accuracy /= count
-			print("Accuracy : " + str(accuracy) + "%")
-		else:
-			print("ERROR: Arguments missing")
-			print("For Batch training syntax    : `$python test.py learning_file`")
-			print("For Training single instance : `$python test.py initModel.xml target.aggt final.plan learning_file`")
+				print("At dir : ", i)
+		accuracy /= count
+		print("Accuracy : " + str(accuracy) + "%")
 
 
 if __name__ == '__main__':
@@ -114,4 +111,16 @@ if __name__ == '__main__':
 	end_dir = 273
 
 	t = Test(data_path, start_dir, end_dir)
-	t.test()
+	'''
+	Pass pickled data for batch testing. "python fileName learning_file"
+	For singleton testing "python fileName initModel.xml target.aggt final.plan learning_file"
+	'''
+
+	if len(sys.argv) == 5:
+		t.mono_test(sys.argv[3], sys.argv[1], sys.argv[2], sys.argv[4])
+	elif len(sys.argv) == 2:
+		t.batch_test(sys.argv[1])
+	else:
+		print("ERROR: Arguments missing")
+		print("For Batch training syntax    : `$python test.py learning_file`")
+		print("For Training single instance : `$python test.py initModel.xml target.aggt final.plan learning_file`")
