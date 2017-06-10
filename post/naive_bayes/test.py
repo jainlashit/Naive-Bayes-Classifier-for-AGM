@@ -73,8 +73,8 @@ class Test:
 		# train_file contains relevant trained data (pickled)
 		self.classifier.prefetch(*self.fetch(train_file))
 		# print(self.classifier.attr_count)
-		accuracy = self.get_accuracy(self.parser.tgt_actions, self.classifier.predict(self.parser.attr_link + self.parser.attr_node))
-		print("Accuracy : " + str(accuracy) + "%")
+		accuracy = 0#self.get_accuracy(self.parser.tgt_actions, self.classifier.predict(self.parser.attr_link + self.parser.attr_node))
+		#print("Accuracy : " + str(accuracy) + "%")
 
 	def batch_test(self, train_file):
 		self.classifier= Classifier([])

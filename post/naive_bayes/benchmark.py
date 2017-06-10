@@ -1,5 +1,5 @@
 import sys
-import test
+from test import *
 
 if len(sys.argv) != 7:
 	print sys.argv[0], 'plan_file init_file target_file train_file threshold fileName'
