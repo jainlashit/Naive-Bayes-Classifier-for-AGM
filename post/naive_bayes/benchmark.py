@@ -1,20 +1,18 @@
 import sys
 from test import *
 
-if len(sys.argv) != 7:
-	print sys.argv[0], 'plan_file init_file target_file train_file threshold fileName'
-	sys.exit(0)
+data_path = "../../tests/"
+start_dir = 271
+end_dir = 273
 
+plan_file   = 'empty'
+init_file   = '../../tests/00521/00521.xml'
+target_file = '../../tests/00521/054_targetMoveObjects.aggt'
+train_file  = 'store.data'
+threshold   = 0.5
+fileName    = 'xxxxxxxxxxxxx'
 
-
-plan_file   = sys.argv[1]
-init_file   = sys.argv[2]
-target_file = sys.argv[3]
-train_file  = sys.argv[4]
-threshold   = sys.argv[5]
-fileName    = sys.argv[6]
-
-t = Test()
+t = Test(data_path, start_dir, end_dir)
 t.mono_test(plan_file, init_file, target_file, train_file)
 t.new_domain(threshold, fileName)
 
