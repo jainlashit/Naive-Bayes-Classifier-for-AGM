@@ -136,6 +136,7 @@ class Parser:
 					# rel stores relations between two id's.
 					rel = temp[1].split(")")[0].strip()
 
+
 					# There can be four cases, src id is int/symbol or dst id is int/symbol
 					if line[0].isdigit() and temp[0].isdigit():
 						id1 = int(line[0])
@@ -144,25 +145,31 @@ class Parser:
 						type1 = self.typeMap[id1]
 						type2 = self.typeMap[id2]
 
-						for relation in self.relMap[id_pair]:
-							self.attr_link.append((type1, relation, type2))
-							self.attr_link.append((type1, relation, rel, type2))
+						self.attr_link.append((type1, rel, type2))
+						if id_pair in self.relMap:
+							for relation in self.relMap[id_pair]:
+								self.attr_link.append((type1, relation, type2))
+								self.attr_link.append((type1, relation, rel, type2))
 							
 					else:
 						if not line[0].isdigit():
 							if not temp[0].isdigit():
 								type1 = var_map[line[0]]
 								type2 = var_map[temp[0]]
+								
+								self.attr_link.append((type1, rel, type2))
 								for id_pair in self.relMap:
 									if type1 == self.typeMap[id_pair[0]] and type2 == self.typeMap[id_pair[1]]:
 										for relation in self.relMap[id_pair]:
 											self.attr_link.append((type1, relation, type2))
 											self.attr_link.append((type1, relation, rel, type2))
-										
+											
 							else:
 								id2 = int(temp[0])
 								type1 = var_map[line[0]]
 								type2 = self.typeMap[id2]
+
+								self.attr_link.append((type1, rel, type2))	
 								for id_pair in self.relMap:
 									if self.typeMap[id_pair[0]] == type1 and id_pair[1] == id2:
 										for relation in self.relMap[id_pair]:
@@ -173,6 +180,8 @@ class Parser:
 							id1 = int(line[0])
 							type1 = self.typeMap[id1]
 							type2 = var_map[temp[0]]
+
+							self.attr_link.append((type1, rel, type2))
 							for id_pair in self.relMap:
 								if id_pair[0] == id1 and self.typeMap[id_pair[1]] == type2:
 									for relation in self.relMap[id_pair]:
