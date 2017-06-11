@@ -24,13 +24,16 @@ class Test:
 		return prb_distrb
 		
 	def get_accuracy(self, plan_file):
+		
+		if os.stat(plan_file).st_size == 0:
+			print("ERROR: Empty plan file")
+			return
+
 		accuracy = 0
 		self.parser.parse_plan(plan_file)
 		tgt_actions = self.parser.tgt_actions
-		prb_distrb = self.classifier.predict(self.parser.attr_link + self.parser.attr_node)
-
 		# print(tgt_actions)
-		self.prb_distrb = self.normalize(prb_distrb)
+
 		for action in self.prb_distrb:
 			if action in tgt_actions:
 				accuracy += (self.prb_distrb[action]) * (self.prb_distrb[action])
@@ -76,6 +79,7 @@ class Test:
 		self.parser.parse_target(target_file)
 		# train_file contains relevant trained data (pickled)
 		self.classifier.prefetch(*self.fetch(train_file))
+		self.prb_distrb = self.normalize(self.classifier.predict(self.parser.attr_link + self.parser.attr_node))
 
 	def batch_test(self, train_file):
 		
@@ -109,8 +113,8 @@ class Test:
 						try:
 							if os.stat(path + file + ".plan").st_size != 0:
 								self.parser.parse_target(path + file)
+								self.prb_distrb = self.normalize(self.classifier.predict(self.parser.attr_link + self.parser.attr_node))
 								accuracy += self.get_accuracy(path + file + ".plan")
-								print(accuracy)
 								count += 1
 						except:
 							pass
