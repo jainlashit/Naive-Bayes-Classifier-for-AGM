@@ -23,8 +23,12 @@ class Test:
 			prb_distrb[action] = prb_distrb[action]/total
 		return prb_distrb
 		
-	def get_accuracy(self, tgt_actions, prb_distrb):
+	def get_accuracy(self, plan_file):
 		accuracy = 0
+		self.parser.parse_plan(plan_file)
+		tgt_actions = self.parser.tgt_actions
+		prb_distrb = self.classifier.predict(self.parser.attr_link + self.parser.attr_node)
+
 		# print(tgt_actions)
 		self.prb_distrb = self.normalize(prb_distrb)
 		for action in self.prb_distrb:
@@ -58,25 +62,20 @@ class Test:
 		self.dirs = range(start_dir, end_dir + 1)
 
 
-	def mono_test(self, plan_file, init_file, target_file, train_file):
+	def mono_test(self, init_file, target_file, train_file):
 		'''
-		For singleton testing pass pickled data from train.py . "python fileName initModel.xml target.aggt final.plan learning_file"
+		For singleton testing pass pickled data from train.py . "python fileName initModel.xml target.aggt learning_file"
 		'''
 		self.classifier = Classifier([])
 		self.parser = Parser()
 		accuracy = 0
-		min_accuracy = 100	
-	 	# .plan file
-		self.parser.parse_plan(plan_file)
+		min_accuracy = 100
 		# .xml file
 		self.parser.parse_initM(init_file)
 		# .aggt file
 		self.parser.parse_target(target_file)
 		# train_file contains relevant trained data (pickled)
 		self.classifier.prefetch(*self.fetch(train_file))
-		# print(self.classifier.attr_count)
-		accuracy = self.get_accuracy(self.parser.tgt_actions, self.classifier.predict(self.parser.attr_link + self.parser.attr_node))
-		print("Accuracy : " + str(accuracy) + "%")
 
 	def batch_test(self, train_file):
 		
@@ -110,12 +109,11 @@ class Test:
 						try:
 							if os.stat(path + file + ".plan").st_size != 0:
 								self.parser.parse_target(path + file)
-								self.parser.parse_plan(path + file + ".plan")
+								accuracy += self.get_accuracy(path + file + ".plan")
+								print(accuracy)
+								count += 1
 						except:
 							pass
-					# print('Number of actions', len(self.parser.tgt_actions))
-					accuracy += self.get_accuracy(self.parser.tgt_actions, self.classifier.predict(self.parser.attr_link + self.parser.attr_node))
-					count += 1
 
 				print("At dir : ", i)
 		accuracy /= count
@@ -127,11 +125,11 @@ if __name__ == '__main__':
 	t = Test()
 	'''
 	Pass pickled data for batch testing. "python fileName learning_file"
-	For singleton testing "python fileName initModel.xml target.aggt final.plan learning_file"
+	For singleton testing "python fileName initModel.xml target.aggt learning_file"
 	'''
 
-	if len(sys.argv) == 5:
-		t.mono_test(sys.argv[3], sys.argv[1], sys.argv[2], sys.argv[4])
+	if len(sys.argv) == 4:
+		t.mono_test(sys.argv[1], sys.argv[2], sys.argv[3])
 		t.new_domain(0.2, "new.aggl")
 	elif len(sys.argv) == 2:
 		data_path = "../../tests/"
@@ -143,4 +141,4 @@ if __name__ == '__main__':
 	else:
 		print("ERROR: Arguments missing")
 		print("For Batch training syntax    : `$python test.py learning_file`")
-		print("For Training single instance : `$python test.py initModel.xml target.aggt final.plan learning_file`")
+		print("For Training single instance : `$python test.py initModel.xml target.aggt learning_file`")
