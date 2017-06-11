@@ -1,0 +1,11 @@
+Dataset is raising a common kind of error.
+
+Traceback (most recent call last):
+  File "train.py", line 40, in <module>
+      p.parse_target(path + file)
+	    File "/home/lashit/AGM/GSoC/src/post/naive_bayes/parser.py", line 158, in parse_target
+		    type2 = var_map[temp[0]]
+			KeyError: 'mugSt'
+
+
+
