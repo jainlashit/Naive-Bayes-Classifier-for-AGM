@@ -8,11 +8,8 @@ import traceback
 
 class Test:
 	
-	def __init__(self, data_path, start_dir, end_dir):
-		self.data_path = data_path
-		self.start_dir = start_dir
-		self.end_dir = end_dir
-		self.dirs = range(start_dir, end_dir + 1)
+	def __init__(self):
+		pass
 
 	def fetch(self, fileName):
 		f = open(fileName, "rb")
@@ -49,11 +46,16 @@ class Test:
 
 	def new_domain(self, threshold, fileName):
 		f = open(fileName, 'w')
-		print(self.prb_distrb)
+		# print(self.prb_distrb)
 		for action in self.prb_distrb:
 			if self.prb_distrb[action] >= threshold:
 				f.write(self.classifier.action_info[action])
 		f.close()
+
+	def batch_input(self, data_path, start_dir, end_dir):
+		self.data_path = data_path
+		# Enter all the directories to be trained here.
+		self.dirs = range(start_dir, end_dir + 1)
 
 
 	def mono_test(self, plan_file, init_file, target_file, train_file):
@@ -73,12 +75,20 @@ class Test:
 		# train_file contains relevant trained data (pickled)
 		self.classifier.prefetch(*self.fetch(train_file))
 		# print(self.classifier.attr_count)
-		accuracy = 0#self.get_accuracy(self.parser.tgt_actions, self.classifier.predict(self.parser.attr_link + self.parser.attr_node))
-		#print("Accuracy : " + str(accuracy) + "%")
+		accuracy = self.get_accuracy(self.parser.tgt_actions, self.classifier.predict(self.parser.attr_link + self.parser.attr_node))
+		print("Accuracy : " + str(accuracy) + "%")
 
 	def batch_test(self, train_file):
+		
+		try:
+			self.data_path
+		except:
+			print("ERROR: invoke batch_input(data_path, start_dir, end_dir) before batch testing")
+			return
+
 		self.classifier= Classifier([])
 		self.parser= Parser()
+		
 		accuracy = 0
 		min_accuracy = 100
 		count = 0
@@ -114,12 +124,7 @@ class Test:
 
 if __name__ == '__main__':
 
-	data_path = "../../tests/"
-	# Enter all the directories to be trained here.
-	start_dir = 271
-	end_dir = 273
-
-	t = Test(data_path, start_dir, end_dir)
+	t = Test()
 	'''
 	Pass pickled data for batch testing. "python fileName learning_file"
 	For singleton testing "python fileName initModel.xml target.aggt final.plan learning_file"
@@ -129,6 +134,11 @@ if __name__ == '__main__':
 		t.mono_test(sys.argv[3], sys.argv[1], sys.argv[2], sys.argv[4])
 		t.new_domain(0.2, "new.aggl")
 	elif len(sys.argv) == 2:
+		data_path = "../../tests/"
+		start_dir = 271
+		end_dir = 273
+		t.batch_input(data_path, start_dir, end_dir)
+		dirs = range(start_dir, end_dir + 1)
 		t.batch_test(sys.argv[1])
 	else:
 		print("ERROR: Arguments missing")
