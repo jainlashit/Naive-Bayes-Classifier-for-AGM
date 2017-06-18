@@ -6,8 +6,12 @@ from parser import Parser
 from classifier import Classifier
 import traceback
 
+class EmptyDomain (Exception):
+	def __init__(self, text):
+		self.text = text
+
 class Test:
-	
+
 	def __init__(self):
 		pass
 
@@ -22,9 +26,9 @@ class Test:
 		for action in prb_distrb:
 			prb_distrb[action] = prb_distrb[action]/total
 		return prb_distrb
-		
+
 	def get_accuracy(self, plan_file):
-		
+
 		if os.stat(plan_file).st_size == 0:
 			print("ERROR: Empty plan file")
 			return
@@ -52,11 +56,34 @@ class Test:
 		return ''.join(str(digit) for digit in reversed(numero))
 
 	def new_domain(self, threshold, fileName):
+		toInclude = [action for action in self.prb_distrb if self.prb_distrb[action] >= threshold]
+		if len(toInclude) == 0:
+			print 'empty domain', fileName
+			raise EmptyDomain('empty domain '+ fileName)
 		f = open(fileName, 'w')
 		# print(self.prb_distrb)
-		for action in self.prb_distrb:
-			if self.prb_distrb[action] >= threshold:
-				f.write(self.classifier.action_info[action])
+		f.write("""spacePattern=3
+lineThickness=2
+fontName=Arial
+name=domain
+vertexDiameter=40
+shortPattern=1
+nodeThickness=2
+fontSize=12
+longPattern=3
+===
+types
+{
+	(robot status)
+	(object objectSt)
+	(table)
+	(room roomSt)
+	(person)
+	(pose poseSt)
+}
+===\n""")
+		for action in toInclude:
+			f.write(self.classifier.action_info[action])
 		f.close()
 
 	def batch_input(self, data_path, start_dir, end_dir):
@@ -82,7 +109,7 @@ class Test:
 		self.prb_distrb = self.normalize(self.classifier.predict(self.parser.attr_link + self.parser.attr_node))
 
 	def batch_test(self, train_file):
-		
+
 		try:
 			self.data_path
 		except:
@@ -91,12 +118,12 @@ class Test:
 
 		self.classifier= Classifier([])
 		self.parser= Parser()
-		
+
 		accuracy = 0
 		min_accuracy = 100
 		count = 0
 		self.classifier.prefetch(*self.fetch(train_file))
-		
+
 		for i in self.dirs:
 			flag = True
 			path = self.data_path + self.enum(5, i) + "/"
@@ -107,7 +134,7 @@ class Test:
 				flag = False
 				print("File not found : " + path + self.enum(5, i) + ".xml")
 
-			if flag:		
+			if flag:
 				for file in os.listdir(path):
 					if file.endswith(".aggt"):
 						try:
@@ -134,7 +161,8 @@ if __name__ == '__main__':
 
 	if len(sys.argv) == 4:
 		t.mono_test(sys.argv[1], sys.argv[2], sys.argv[3])
-		t.new_domain(0.2, "new.aggl")
+		for th in [0.1, 0.15, 0.2, 0.25, 0.3, 0.4, 0.5, 0.7, 0.9]:
+			t.new_domain(th, "filtered_"+str(int(th*100)).zfill(10)+".aggl")
 	elif len(sys.argv) == 2:
 		data_path = "../../tests/"
 		start_dir = 271
