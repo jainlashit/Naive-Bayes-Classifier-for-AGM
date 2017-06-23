@@ -23,18 +23,20 @@ class Classifier:
 
 	def train(self, attr_list, tgt_actions):
 		# attr_list contains both attr_node and attr_link [refer Parser class] (list of all the attributes)
+		flag = {}
 		for action in tgt_actions:
-			flag = True
+			for attr in attr_list:
+				flag[attr] = True
 			self.total_count += 1
 			self.action_count[action] += 1
 			for attr in attr_list:
 				if attr not in self.attr_count[action]:
+					flag[attr] = False
 					self.attr_count[action][attr] = 1
-					flag = False
 					if attr not in self.attr_all:
 						self.attr_all.append(attr)
-				elif flag:
-					flag = False
+				elif flag[attr]:
+					flag[attr] = False
 					self.attr_count[action][attr] += 1
 				# else:
 				# 	'''There is a chance that the following count can be greater than action_count[action]
