@@ -11,12 +11,7 @@ nodeThickness=2
 fontSize=12
 longPattern=3
 ===
-"""
-
-
-
-
-"""types
+types
 {
 	(robot status)
 	(object objectSt)
