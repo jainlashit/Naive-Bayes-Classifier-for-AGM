@@ -1,4 +1,5 @@
-class AGMConst:
+class AGMConst():
+
 	def __init__(self):
 		self.visualParams = """spacePattern=3
 lineThickness=2
@@ -10,7 +11,12 @@ nodeThickness=2
 fontSize=12
 longPattern=3
 ===
-types
+"""
+
+
+
+
+"""types
 {
 	(robot status)
 	(object objectSt)
