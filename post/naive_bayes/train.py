@@ -9,7 +9,7 @@ data_path = "../../tests/"
 
 # Enter all the directories to be trained here.
 start_dir = 1
-end_dir = 530
+end_dir = 270
 dirs = range(start_dir, end_dir + 1)
 
 def enum(num_digits, count):

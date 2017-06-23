@@ -99,10 +99,10 @@ class Parser:
 					# If id is given, inital type is matched to type of id
 					if line[0].isdigit():
 						init_type = self.typeMap[int(line[0])]
+					else:
 					''' If id is not given, initial type is assumed to be same as final type
 					and the mapping is recorded.
 					'''
-					else:
 						init_type = final_type
 						var_map[line[0]] = final_type
 					self.attr_node.append((init_type, final_type))

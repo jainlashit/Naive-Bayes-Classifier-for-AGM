@@ -1,4 +1,4 @@
-Dataset is raising a common kind of error.
+There is common error coming from Database Parsing.
 
 Traceback (most recent call last):
   File "train.py", line 40, in <module>
