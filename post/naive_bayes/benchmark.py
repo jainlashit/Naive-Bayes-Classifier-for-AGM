@@ -22,7 +22,7 @@ data_path = "../../tests/"
 
 # Enter all the directories to be trained here.
 start_dir = 531
-end_dir = 540
+end_dir = 531
 dirs = range(start_dir, end_dir + 1)
 
 def enum(num_digits, count):
@@ -82,7 +82,7 @@ for i in dirs:
 								continue
 							outfile = 'benchmark/'+enum(5, i)+'/'+filename
 							estrin = "agglplan " + domain + ' ' + initialModel +  ' ' + targetFile + ' ' + outfile+str(int(th*100)).zfill(10)+'.plan'
-							print '<'+estrin+'>'
+							# print '<'+estrin+'>'
 							os.system(estrin)
 
 					except:
