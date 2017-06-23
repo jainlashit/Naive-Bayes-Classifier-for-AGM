@@ -5,6 +5,7 @@ import pickle
 from parser import Parser
 from classifier import Classifier
 import traceback
+from const import AGMConst
 
 class EmptyDomain (Exception):
 	def __init__(self, text):
@@ -25,6 +26,7 @@ class Test:
 			total += prb_distrb[action]
 		for action in prb_distrb:
 			prb_distrb[action] = prb_distrb[action]/total
+		print(prb_distrb)
 		return prb_distrb
 
 	def get_accuracy(self, plan_file):
@@ -58,30 +60,11 @@ class Test:
 	def new_domain(self, threshold, fileName):
 		toInclude = [action for action in self.prb_distrb if self.prb_distrb[action] >= threshold]
 		if len(toInclude) == 0:
-			print 'empty domain', fileName
+			print('empty domain', fileName)
 			raise EmptyDomain('empty domain '+ fileName)
 		f = open(fileName, 'w')
 		# print(self.prb_distrb)
-		f.write("""spacePattern=3
-lineThickness=2
-fontName=Arial
-name=domain
-vertexDiameter=40
-shortPattern=1
-nodeThickness=2
-fontSize=12
-longPattern=3
-===
-types
-{
-	(robot status)
-	(object objectSt)
-	(table)
-	(room roomSt)
-	(person)
-	(pose poseSt)
-}
-===\n""")
+		f.write(AGMConst().visualParams)
 		for action in toInclude:
 			f.write(self.classifier.action_info[action])
 		f.close()
@@ -124,6 +107,7 @@ types
 		count = 0
 		self.classifier.prefetch(*self.fetch(train_file))
 
+
 		for i in self.dirs:
 			flag = True
 			path = self.data_path + self.enum(5, i) + "/"
@@ -133,22 +117,26 @@ types
 			except:
 				flag = False
 				print("File not found : " + path + self.enum(5, i) + ".xml")
+				continue
+		
+			for file in os.listdir(path):
+				if file.endswith(".aggt"):
+					try:
+						if os.stat(path + file + ".plan").st_size != 0:
+							self.parser.parse_target(path + file)
+							self.prb_distrb = self.normalize(self.classifier.predict(self.parser.attr_link + self.parser.attr_node))
+							accuracy += self.get_accuracy(path + file + ".plan")
+							count += 1
+					except:
+						pass
 
-			if flag:
-				for file in os.listdir(path):
-					if file.endswith(".aggt"):
-						try:
-							if os.stat(path + file + ".plan").st_size != 0:
-								self.parser.parse_target(path + file)
-								self.prb_distrb = self.normalize(self.classifier.predict(self.parser.attr_link + self.parser.attr_node))
-								accuracy += self.get_accuracy(path + file + ".plan")
-								count += 1
-						except:
-							pass
-
-				print("At dir : ", i)
-		accuracy /= count
-		print("Accuracy : " + str(accuracy) + "%")
+			print("At dir : ", i)
+		try:
+			accuracy /= count
+			print("Accuracy : " + str(accuracy) + "%")
+		except ZeroDivisionError:
+			pass
+			
 
 
 if __name__ == '__main__':
@@ -161,12 +149,12 @@ if __name__ == '__main__':
 
 	if len(sys.argv) == 4:
 		t.mono_test(sys.argv[1], sys.argv[2], sys.argv[3])
-		for th in [0.1, 0.15, 0.2, 0.25, 0.3, 0.4, 0.5, 0.7, 0.9]:
+		for th in [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5]:
 			t.new_domain(th, "filtered_"+str(int(th*100)).zfill(10)+".aggl")
 	elif len(sys.argv) == 2:
 		data_path = "../../tests/"
-		start_dir = 271
-		end_dir = 273
+		start_dir = 542
+		end_dir = 542
 		t.batch_input(data_path, start_dir, end_dir)
 		dirs = range(start_dir, end_dir + 1)
 		t.batch_test(sys.argv[1])
