@@ -27,7 +27,7 @@ class Test:
 		for action in prb_distrb:
 			prb_distrb[action] = prb_distrb[action]/total
 		# Not necessary to sort but doing it for other methods like new_domain
-		self.prb_distrb = sorted(self.prb_distrb)
+		prb_distrb = sorted(prb_distrb)
 		return prb_distrb
 
 	def get_accuracy(self, plan_file):
@@ -64,10 +64,10 @@ class Test:
 			mode = False => fraction will be taken as probability threshold
 		'''
 		if mode:
-			toInclude = [action for action in self.prb_distrb[0:fraction*len(self.prb_distrb)]]
+			toInclude = [action for action in self.prb_distrb[0:int(fraction*len(self.prb_distrb))]]
 		else:
 			toInclude = [action for action in self.prb_distrb if self.prb_distrb[action] >= fraction]
-		
+
 		if len(toInclude) == 0:
 			print('empty domain', fileName)
 			raise EmptyDomain('empty domain '+ fileName)
