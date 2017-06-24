@@ -26,8 +26,10 @@ class Test:
 			total += prb_distrb[action]
 		for action in prb_distrb:
 			prb_distrb[action] = prb_distrb[action]/total
+		
 		# Not necessary to sort but doing it for other methods like new_domain
-		prb_distrb = sorted(prb_distrb)
+		prb_distrb = sorted(prb_distrb, key=prb_distrb.get, reverse=True)
+		
 		return prb_distrb
 
 	def get_accuracy(self, plan_file):
