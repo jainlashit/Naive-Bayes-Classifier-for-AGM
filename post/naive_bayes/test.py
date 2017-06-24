@@ -26,7 +26,8 @@ class Test:
 			total += prb_distrb[action]
 		for action in prb_distrb:
 			prb_distrb[action] = prb_distrb[action]/total
-		print(prb_distrb)
+		# Not necessary to sort but doing it for other methods like new_domain
+		self.prb_distrb = sorted(self.prb_distrb)
 		return prb_distrb
 
 	def get_accuracy(self, plan_file):
@@ -57,8 +58,16 @@ class Test:
 			count = int(count/10)
 		return ''.join(str(digit) for digit in reversed(numero))
 
-	def new_domain(self, threshold, fileName):
-		toInclude = [action for action in self.prb_distrb if self.prb_distrb[action] >= threshold]
+	def new_domain(self, fraction, fileName, mode=True):
+		'''
+			mode = True => fraction will be taken as action count threshold
+			mode = False => fraction will be taken as probability threshold
+		'''
+		if mode:
+			toInclude = [action for action in self.prb_distrb[0:fraction*len(self.prb_distrb)]]
+		else:
+			toInclude = [action for action in self.prb_distrb if self.prb_distrb[action] >= fraction]
+		
 		if len(toInclude) == 0:
 			print('empty domain', fileName)
 			raise EmptyDomain('empty domain '+ fileName)
@@ -68,6 +77,7 @@ class Test:
 		for action in toInclude:
 			f.write(self.classifier.action_info[action])
 		f.close()
+
 
 	def batch_input(self, data_path, start_dir, end_dir):
 		self.data_path = data_path
