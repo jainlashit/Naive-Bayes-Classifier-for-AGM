@@ -8,7 +8,20 @@ nodeThickness=2
 fontSize=12
 longPattern=3
 ===
-
+types
+{
+	(robot)
+	(status)
+	(table)
+	(tableSt)
+	(object)
+	(objectSt)
+	(pose)
+	(poseSt)
+	(room)
+	(roomSt)
+}
+===
 hierarchical moveObjectToTable : active(1)
 {
 	{
